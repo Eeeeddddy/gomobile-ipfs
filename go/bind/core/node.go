@@ -70,7 +70,7 @@ func NewNode(r *Repo, config *NodeConfig) (*Node, error) {
 			logger: logger,
 		}
 		ipfsutil.SetNetDriver(inet)
-		manet.SetNetInterface(inet)
+		//manet.SetNetInterface(inet)
 	}
 
 	var bleOpt libp2p.Option

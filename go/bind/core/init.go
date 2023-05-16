@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/ipfs-shipyard/gomobile-ipfs/go/pkg/ble-driver"
+	"github.com/ipfs/kubo/config"
 	ipfs_config "github.com/ipfs/kubo/config"
 	libp2p_ci "github.com/libp2p/go-libp2p/core/crypto"
 	libp2p_peer "github.com/libp2p/go-libp2p/core/peer"
@@ -44,7 +45,7 @@ func initConfig(out io.Writer, nBitsForKeypair int) (*ipfs_config.Config, error)
 		},
 
 		Routing: ipfs_config.Routing{
-			Type: "dhtclient",
+			Type: config.NewOptionalString("dhtclient"),
 		},
 
 		// setup the node mount points.
@@ -58,15 +59,15 @@ func initConfig(out io.Writer, nBitsForKeypair int) (*ipfs_config.Config, error)
 		},
 
 		Reprovider: ipfs_config.Reprovider{
-			Interval: "12h",
-			Strategy: "all",
+			Interval: config.NewOptionalDuration(12 * time.Hour),
+			Strategy: config.NewOptionalString("all"),
 		},
 		Swarm: ipfs_config.SwarmConfig{
 			ConnMgr: ipfs_config.ConnMgr{
-				LowWater:    defaultConnMgrLowWater,
-				HighWater:   defaultConnMgrHighWater,
-				GracePeriod: defaultConnMgrGracePeriod.String(),
-				Type:        "basic",
+				LowWater:    config.NewOptionalInteger(defaultConnMgrLowWater),
+				HighWater:   config.NewOptionalInteger(defaultConnMgrHighWater),
+				GracePeriod: config.NewOptionalDuration(defaultConnMgrGracePeriod),
+				Type:        config.NewOptionalString("basic"),
 			},
 		},
 	}
